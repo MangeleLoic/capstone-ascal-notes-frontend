@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.home-container {
+  background-image: url('../src/Img/Biblioteca\ della\ Crociera\ 1.jpg'); 
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat; 
+  opacity: 0.9;
+}
+
+.text-center h1 {
+  font-size: 3.2 rem; 
+  font-weight: bold;
+}
+
+.text-center h6 {
+  font-size: 1.25 rem;
+}
+
