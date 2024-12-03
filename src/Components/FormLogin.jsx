@@ -23,8 +23,9 @@ const FormLogin = () => {
 
       if (response.ok) {
         alert("Login avvenuto con successo!");
-        const { token } = await response.json();
-        localStorage.setItem("token", token); 
+        const { accessToken } = await response.json();
+        console.log("Token ricevuto:", accessToken);
+        localStorage.setItem("token", accessToken); 
 
         navigate("/Home");
          

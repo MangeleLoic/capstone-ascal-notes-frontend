@@ -9,7 +9,8 @@ function MyNavbar (){
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-          <Nav.Link>Home</Nav.Link>
+          <Nav.Link as={Link} to="/Home">Home</Nav.Link>
+          <Nav.Link as={Link} to="/Profilo">Il mio Profilo</Nav.Link>
           <Nav.Link>My Space</Nav.Link>
           <NavDropdown title="Library" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/1">Appunti</NavDropdown.Item>
