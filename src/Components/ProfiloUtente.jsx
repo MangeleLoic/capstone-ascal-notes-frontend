@@ -33,38 +33,45 @@ function ProfiloUtente() {
         setLoading(false);
       });
   }, []);
-
   const handleUpdate = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  e.preventDefault();
+  setError("");
+  setSuccess("");
 
-    try {
-      const res = await fetch("http://localhost:3001/utenti/me", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          username: userData.username,
-          fullname: userData.fullname,
-          email: userData.email,
-        }),
-      });
+  try {
+    const res = await fetch("http://localhost:3001/utenti/me", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        username: userData.username,
+        fullname: userData.fullname,
+        email: userData.email,
+      }),
+    });
 
-      if (res.ok) {
-        const updatedData = await res.json();
-        setUserData(updatedData);
+    if (res.ok) {
+      const data = await res.json();
+
+      
+      if (data.token) {
+        localStorage.setItem("token", data.token);  
+        setUserData({ ...userData });
         setSuccess("Profilo aggiornato con successo!");
         setEditMode(false);
       } else {
-        setError("Errore durante l'aggiornamento del profilo.");
+        setError("Token non ricevuto.");
       }
-    } catch {
-      setError("Si è verificato un errore.");
+    } else {
+      setError("Errore durante l'aggiornamento del profilo.");
     }
-  };
+  } catch {
+    setError("Si è verificato un errore.");
+  }
+};
+
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
