@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 
-const FormRegister = () => {
+function FormRegister() {
   const [formData, setFormData] = useState({
     username: "",
     email: "",

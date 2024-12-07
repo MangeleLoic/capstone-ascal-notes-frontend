@@ -2,7 +2,7 @@ import { Button, Container, Card, Form } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const FormLogin = () => {
+function FormLogin () {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); 

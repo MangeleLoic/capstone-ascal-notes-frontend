@@ -6,6 +6,12 @@ import FormLogin from './Components/FormLogin';
 import "bootstrap/dist/css/bootstrap.min.css";
 import ProfiloUtente from './Components/ProfiloUtente';
 import ProtectedRoute from './Components/ProtectedRoute'; 
+import MyFooter from './Components/MyFooter';
+import NotFound from './Components/NotFound';
+import Corsi from './Components/Corsi';
+import GestisciCorsi from './Components/GestisciCorsi';
+import AggiungiCorso from './Components/AggiungiCorso';
+import ModificaCorso from './Components/ModificaCorsi';
 
 function App() {
   return (
@@ -15,6 +21,11 @@ function App() {
         <Route path="/Home" element={<Home />} />
         <Route path="/register" element={<FormRegister />} />
         <Route path="/login" element={<FormLogin />} />
+        <Route path="/admin" element={<GestisciCorsi />} />
+        <Route path="/admin/corso/aggiungi" element={<AggiungiCorso />} />
+        <Route path="/admin/corso/modifica/:id" element={<ModificaCorso />} />
+        <Route path="/corsi" element={<Corsi />} />
+        <Route path='*' element={<NotFound />} />
         <Route
           path="/profilo"
           element={
@@ -24,6 +35,7 @@ function App() {
           }
         />
       </Routes>
+      <MyFooter />
     </BrowserRouter>
   );
 }
