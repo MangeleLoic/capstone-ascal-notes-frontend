@@ -53,8 +53,10 @@ function FormRegister() {
   };
 
   return (
+    <>
+    <div className="login-container py-2">
     <Container className="d-flex flex-column align-items-center pb-3 vh-100">
-      <Card className="p-4 shadow cardSign mb-3">
+      <Card className="p-4 shadow cardSign my-3 w-75">
         <Card.Title className="mb-2 fs-2 text-center">Registrati</Card.Title>
         <Card.Text className="text-center">
           Inizia subito a utilizzare Ascal Notes!
@@ -123,6 +125,8 @@ function FormRegister() {
         </Card.Text>
       </Card>
     </Container>
+    </div>
+    </>
   );
 };
 

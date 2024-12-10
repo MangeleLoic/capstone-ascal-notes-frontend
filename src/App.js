@@ -12,6 +12,9 @@ import Corsi from './Components/Corsi';
 import GestisciCorsi from './Components/GestisciCorsi';
 import AggiungiCorso from './Components/AggiungiCorso';
 import ModificaCorso from './Components/ModificaCorsi';
+import GestisciAppunti from './Components/GestisciAppunti';
+import ModificaAppunti from './Components/ModificaAppunti';
+import AggiungiAppunti from './Components/AggiungiAppunti';
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
         <Route path="/admin/corso/aggiungi" element={<AggiungiCorso />} />
         <Route path="/admin/corso/modifica/:id" element={<ModificaCorso />} />
         <Route path="/corsi" element={<Corsi />} />
+        <Route path="/appunti" element={<GestisciAppunti />} />
+        <Route path="/appunti/modifica/:id" element={<ModificaAppunti />} />
+        <Route path="/appunti/aggiungi" element={<AggiungiAppunti />} />
         <Route path='*' element={<NotFound />} />
         <Route
           path="/profilo"

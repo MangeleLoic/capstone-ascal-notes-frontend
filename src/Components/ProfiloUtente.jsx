@@ -56,8 +56,8 @@ function ProfiloUtente() {
       const data = await res.json();
 
       
-      if (data.token) {
-        localStorage.setItem("token", data.token);  
+      if (data.accessToken) {
+        localStorage.setItem("token", data.accessToken);  
         setUserData({ ...userData });
         setSuccess("Profilo aggiornato con successo!");
         setEditMode(false);
@@ -126,6 +126,9 @@ function ProfiloUtente() {
   }
 
   return (
+    <>
+    <div className="appunti-container py-2">
+  
     <Container className="mt-4">
       <Card className="p-4 shadow">
         <Card.Title>Profilo Utente</Card.Title>
@@ -197,6 +200,8 @@ function ProfiloUtente() {
         </Button>
       </Card>
     </Container>
+    </div>
+    </>
   );
 }
 

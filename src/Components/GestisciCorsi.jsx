@@ -78,8 +78,9 @@ function GestisciCorsi() {
   };
 
   return (
+  <>  
+   <div className="appunti-container py-2">
     <div className="container my-4">
-      <h2 className="text-center mb-4">Corsi</h2>
       <div className="row mb-3">
         <div className="col">
           <Link className="btn btn-primary me-1" to="/admin/corso/aggiungi" role="button">
@@ -153,6 +154,8 @@ function GestisciCorsi() {
         </>
       )}
     </div>
+    </div>
+    </>
   );
 }
 

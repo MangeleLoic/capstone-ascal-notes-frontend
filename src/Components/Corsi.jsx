@@ -52,8 +52,10 @@ function Corsi() {
   };
 
   return (
+    <>
+    <div className="appunti-container py-2">
     <div className="container my-4">
-      <h2 className="text-center mb-4">Corsi</h2>
+      
       {loading && <p>Caricamento in corso...</p>}
       {error && <p className="text-danger">{error}</p>}
       {!loading && !error && (
@@ -103,6 +105,8 @@ function Corsi() {
         </>
       )}
     </div>
+    </div>
+    </>
   );
 }
 

@@ -10,7 +10,7 @@ function MyNavbar (){
           <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
           <Nav.Link as={Link} to="/Home">Home</Nav.Link>
-          <Nav.Link as={Link} to="/Profilo">Il mio Profilo</Nav.Link>
+         
           
           <NavDropdown title="Library" id="basic-nav-dropdown">
             <NavDropdown.Item as={Link} to="/appunti">
@@ -19,11 +19,20 @@ function MyNavbar (){
             <NavDropdown.Item as={Link} to="/corsi">
               Corsi
             </NavDropdown.Item>
+            
           </NavDropdown>
           <Nav.Link as={Link} to="/admin">Admin</Nav.Link>
         </Nav>
         <Nav className="ms-auto mx-3">
-          <Nav.Link as={Link} to="/login">Accedi</Nav.Link>
+        <NavDropdown title="My Space" id="basic-nav-dropdown">
+            <NavDropdown.Item as={Link} to="/Profilo">
+              Profilo
+            </NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/login">
+              Accedi
+            </NavDropdown.Item>
+            
+          </NavDropdown>
         </Nav>
           </Navbar.Collapse>
         </Navbar>

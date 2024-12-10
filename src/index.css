@@ -20,6 +20,22 @@ code {
   opacity: 0.9;
 }
 
+.appunti-container {
+  background-image: url('../src/Img/biblioteca\ \(1\).jpg'); 
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat; 
+  opacity: 0.9;
+}
+
+.login-container {
+  background-image: url('../src/Img/Mov.-Biblioteca_Riall..jpg'); 
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat; 
+  opacity: 0.9;
+}
+
 .text-center h1 {
   font-size: 3.2 rem; 
   font-weight: bold;

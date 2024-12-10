@@ -40,8 +40,10 @@ function FormLogin () {
   };
 
   return (
-    <Container className="d-flex flex-column align-items-center justify-content-center pb-3 vh-100">
-      <Card className="p-4 shadow cardSign mb-3">
+    <>
+    <div className="login-container py-2">
+    <Container className="d-flex flex-column align-items-center justify-content-center pb-3 vh-100 ">
+      <Card className="p-4 shadow cardSign mb-3 w-75">
         <Card.Title className="mb-4 fs-2">Accedi</Card.Title>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-4" controlId="formBasicUsername">
@@ -99,6 +101,8 @@ function FormLogin () {
         </p>
       </Card>
     </Container>
+    </div>
+    </>
   );
 };
 
