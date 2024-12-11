@@ -48,7 +48,7 @@ function FormRegister() {
         setError(errorData.message || "Errore durante la registrazione.");
       }
     } catch (error) {
-      setError("Si è verificato un errore. Riprova più tardi.");
+      setError("Cìè stato un errore. Riprova più tardi.");
     }
   };
 

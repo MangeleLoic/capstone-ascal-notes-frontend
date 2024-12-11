@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function AggiungiCorso() {
@@ -8,7 +9,7 @@ function AggiungiCorso() {
     descrizione: "",
     facolta: "",
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate(); 
 
   
@@ -54,55 +55,65 @@ function AggiungiCorso() {
   };
 
   return (
-    <div className="container my-4">
-      <div className="row">
-        <div className="col-md-8 mx-auto rounded border p-4">
+    <Container className="my-4">
+      <Row className="justify-content-center">
+      <Col md={8} className="rounded border p-4">
           <h2 className="text-center mb-5">Aggiungi Corso</h2>
           <form onSubmit={handleSubmit}>
             {error && <div className="alert alert-danger">{error}</div>}
 
-            <div className="row mb-3">
-              <label className="col-sm-4 col-form-label">Nome</label>
-              <div className="col-sm-8">
-                <input
-                  className="form-control"
+             <Row className=" mb-3">
+              <Form.Label column sm={4}>
+                Nome
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control
+                  type="text"
                   name="nome"
                   value={formData.nome}
                   onChange={handleChange}
+                  placeholder="Inserisci il nome del corso"
                 />
-              </div>
-            </div>
+              </Col>
+           </Row>
 
-            <div className="row mb-3">
-              <label className="col-sm-4 col-form-label">Codice</label>
-              <div className="col-sm-8">
-                <input
-                  className="form-control"
+             <Row className=" mb-3">
+              <Form.Label column sm={4}>
+                Codice
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control
+                  type="text"
                   name="codice"
                   value={formData.codice}
                   onChange={handleChange}
+                  placeholder="Inserisci il codice del corso"
                 />
-              </div>
-            </div>
+              </Col>
+           </Row>
 
-            <div className="row mb-3">
-              <label className="col-sm-4 col-form-label">Descrizione</label>
-              <div className="col-sm-8">
-                <textarea
-                  className="form-control"
+             <Row className=" mb-3">
+              <Form.Label column sm={4}>
+                Descrizione
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control
+                  as="textarea"
                   name="descrizione"
-                  rows="3"
+                  rows={3}
                   value={formData.descrizione}
                   onChange={handleChange}
+                  placeholder="Inserisci una descrizione del corso"
                 />
-              </div>
-            </div>
+              </Col>
+           </Row>
 
-            <div className="row mb-3">
-              <label className="col-sm-4 col-form-label">Facoltà</label>
-              <div className="col-sm-8">
-                <select
-                  className="form-select"
+             <Row className=" mb-3">
+              <Form.Label column sm={4}>
+                Facoltà
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Select
                   name="facolta"
                   value={formData.facolta}
                   onChange={handleChange}
@@ -113,26 +124,26 @@ function AggiungiCorso() {
                   <option value="Ingegneria Informatica">Ingegneria Informatica</option>
                   <option value="Infermieristica">Infermieristica</option>
                   <option value="Altro">Altro</option>
-                </select>
-              </div>
-            </div>
+                </Form.Select>
+              </Col>
+           </Row>
 
-            <div className="row">
-              <div className="offset-sm-4 col-sm-4 d-flex">
+            <Row >
+              <Col sm={4} className="offset-sm-4 d-flex">
                 <button type="submit" className="btn btn-primary">
                   Aggiungi
                 </button>
-              </div>
-              <div className="col-sm-4 d-flex">
+              </Col>
+              <Col sm={4} className=" d-flex">
                 <a className="btn btn-secondary" href="/admin" role="button">
                   Cancella
                 </a>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </form>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

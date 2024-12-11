@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function AggiungiAppunto() {
@@ -8,26 +9,27 @@ function AggiungiAppunto() {
     corsoId: "",
   });
   const [corsi, setCorsi] = useState([]);
-  const [utenteId, setUtenteId] = useState("");
-  const [error, setError] = useState("");
+  const [utente, setUtente] = useState(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  
 
   
   useEffect(() => {
     const fetchCorsi = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:3001/corsi", {
+        const response = await fetch("http://localhost:3001/corsi", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        if (!res.ok) {
+        if (!response.ok) {
           throw new Error("Errore nel recupero dei corsi.");
         }
 
-        const data = await res.json();
+        const data = await response.json();
         setCorsi(data.content); 
       } catch (e) {
         setError(e.message);
@@ -42,20 +44,20 @@ function AggiungiAppunto() {
     const fetchUtente = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:3001/utenti/me", {
+        const response = await fetch("http://localhost:3001/utenti/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        if (!res.ok) {
+        if (!response.ok) {
           throw new Error("Errore nel recupero dei dati dell'utente.");
         }
 
-        const data = await res.json();
-        setUtenteId(data.id); 
-      } catch (e) {
-        setError(e.message);
+        const data = await response.json();
+        setUtente(data.id); 
+      } catch (error) {
+        setError(error.message);
       }
     };
 
@@ -87,7 +89,7 @@ function AggiungiAppunto() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ ...formData, utenteId }), 
+        body: JSON.stringify({ ...formData, utente }), 
       });
 
       if (!res.ok) {
@@ -101,43 +103,48 @@ function AggiungiAppunto() {
   };
 
   return (
-    <div className="container my-4">
-      <div className="row">
-        <div className="col-md-8 mx-auto rounded border p-4">
+    <Container className=" my-4">
+      <Row className="justify-content-center" >
+      <Col md={8} className="rounded border p-4">
           <h2 className="text-center mb-5">Aggiungi Appunto</h2>
           <form onSubmit={handleSubmit}>
             {error && <div className="alert alert-danger">{error}</div>}
 
-            <div className="row mb-3">
-              <label className="col-sm-4 col-form-label">Titolo</label>
-              <div className="col-sm-8">
-                <input
-                  className="form-control"
+            <Row className=" mb-3">
+            <Form.Label column sm={4}>
+                Titolo
+              </Form.Label>
+              <Col sm={8}>
+              <Form.Control
                   name="titolo"
                   value={formData.titolo}
                   onChange={handleChange}
                 />
-              </div>
-            </div>
+              </Col>
+            </Row>
 
-            <div className="row mb-3">
-              <label className="col-sm-4 col-form-label">Contenuto</label>
-              <div className="col-sm-8">
-                <textarea
-                  className="form-control"
+            <Row className=" mb-3">
+            <Form.Label column sm={4}>
+                Contenuto
+              </Form.Label>
+              <Col sm={8}>
+              <Form.Control
+                  type="textarea"
                   name="contenuto"
-                  rows="3"
+                  rows={3}
                   value={formData.contenuto}
                   onChange={handleChange}
+                  placeholder="Scrivi il contenuto"
                 />
-              </div>
-            </div>
+              </Col>
+            </Row>
 
-            <div className="row mb-3">
-              <label className="col-sm-4 col-form-label">Corso</label>
-              <div className="col-sm-8">
-                <select
-                  className="form-control"
+            <Row className=" mb-3">
+            <Form.Label column sm={4}>
+                Corso
+              </Form.Label>
+              <Col sm={8}>
+              <Form.Select
                   name="corsoId"
                   value={formData.corsoId}
                   onChange={handleChange}
@@ -148,26 +155,26 @@ function AggiungiAppunto() {
                       {corso.nome}
                     </option>
                   ))}
-                </select>
-              </div>
-            </div>
+                </Form.Select>
+              </Col>
+            </Row>
 
-            <div className="row">
-              <div className="offset-sm-4 col-sm-4 d-flex">
+            <Row>
+              <Col className="offset-sm-4 sm={4} d-flex">
                 <button type="submit" className="btn btn-primary">
                   Aggiungi
                 </button>
-              </div>
-              <div className="col-sm-4 d-flex">
+              </Col>
+              <Col className="sm={4} d-flex">
                 <a className="btn btn-secondary" href="/appunti" role="button">
                   Annulla
                 </a>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </form>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
