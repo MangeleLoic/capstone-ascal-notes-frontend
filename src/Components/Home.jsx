@@ -73,7 +73,7 @@ function Home() {
           <Form className="d-flex" onSubmit={handleSearch}>
             <Form.Control
               type="text"
-              placeholder="Cerca appunti, corsi o utenti..."
+              placeholder="Cerca appunti..."
               className="form-control-lg"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -84,7 +84,7 @@ function Home() {
           </Form>
           {error && <p className="text-danger mt-3">{error}</p>}
           {result && (
-            <Card className='my-4 mx-auto text-center' style={{ width: '20rem' }}>
+            <Card className='my-4 mx-auto text-center bg-success text-light ' style={{ width: '20rem' }}>
               <Card.Img variant="top" src="../src/Img/due libri impilati + un libro aperto+ una sola scritta Ascal-Notes+ sfondo rosso_giallo+ una piuma doca.png" />
               <Card.Body>
                 <Card.Title>Risultato ricerca</Card.Title>
