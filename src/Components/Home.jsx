@@ -5,9 +5,11 @@ function Home() {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [allegati, setAllegati] = useState([]);
 
   const handleSearch = async (e) => {
     e.preventDefault(); 
+
     if (!search.trim()) {
       setError("Il campo di ricerca non può essere vuoto.");
       return;
@@ -28,9 +30,28 @@ function Home() {
       }
 
       const data = await response.json();
-      setResult(data); 
+      setResult(data);
+
+      
+      if (data.id) {
+        const allegatiResponse =await fetch(`http://localhost:3001/allegati/${data.id}/all`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (allegatiResponse.ok) {
+          const allegatiData = await allegatiResponse.json();
+          setAllegati(allegatiData);
+        } else {
+          setAllegati([]);
+        }
+      } else {
+        setAllegati([]);
+      }
     } catch (err) {
       setResult(null); 
+      setAllegati([]);
       setError(err.message);
     }
   };
@@ -63,18 +84,37 @@ function Home() {
           </Form>
           {error && <p className="text-danger mt-3">{error}</p>}
           {result && (
-            <Card className="mt-4 p-3 bg-success rounded text-light" >
-            <Card.Body>
-              <Card.Title>Risultato ricerca</Card.Title>
-              <Card.Text>
-              <p><strong>Titolo:</strong> {result.titolo}</p>
-              <p><strong>Contenuto:</strong> {result.contenuto}</p>
-              </Card.Text>
-              
-            </Card.Body>
-          </Card>
-
-            
+            <Card className='my-4 mx-auto text-center' style={{ width: '20rem' }}>
+              <Card.Img variant="top" src="../src/Img/due libri impilati + un libro aperto+ una sola scritta Ascal-Notes+ sfondo rosso_giallo+ una piuma doca.png" />
+              <Card.Body>
+                <Card.Title>Risultato ricerca</Card.Title>
+                <Card.Text>
+                  <p><strong>Titolo:</strong> {result.titolo}</p>
+                  <p><strong>Contenuto:</strong> {result.contenuto}</p>
+                  <p><strong>Caricato da:</strong> {result.utente.fullname}</p>
+                  <p><strong>Creato il :</strong>  {new Date(result.dataCreazione).toLocaleDateString('it-IT', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })}</p>
+                </Card.Text>
+               
+                {allegati.length > 0 && (
+                  allegati.map((allegato) => (
+                    <Button
+                      key={allegato.id}
+                      variant="primary"
+                      href={allegato.file}
+                      target="_blank"
+                    >
+                      Scarica Allegato {allegato.file}
+                    </Button>
+                  ))
+                )}
+              </Card.Body>
+            </Card>
           )}
         </Col>
       </Row>
