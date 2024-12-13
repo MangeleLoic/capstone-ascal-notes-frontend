@@ -23,7 +23,7 @@ function ModificaAppunti() {
 
         const response = await fetch(`http://localhost:3001/appunti/${id}`, {
           headers: {
-            "Content-Type": "application/json",
+            
             Authorization: `Bearer ${token}`,
           },
 
@@ -36,9 +36,12 @@ function ModificaAppunti() {
         }
 
         const data = await response.json();
+        console.log(data);
         setFormData({
           titolo: data.titolo || "",
           contenuto: data.contenuto || "",
+          utenteId: data.utente.id || "",  
+        corsoId: data.corso.nome || "",   
           allegato: null,
         });
         setAllegato(data.allegato);
@@ -102,7 +105,9 @@ function ModificaAppunti() {
       
       const appuntoUpdateData = {
         titolo: formData.titolo,
-        contenuto: formData.contenuto, 
+        contenuto: formData.contenuto,
+        utenteId: formData.utente,  
+      corsoId: formData.corso,   
   allegati: uploadedFileData ? [uploadedFileData.id] : allegato ? [allegato.id] : [],
       };
   
@@ -116,7 +121,7 @@ function ModificaAppunti() {
       });
   
       if (!response.ok) {
-        navigate("/appunti");
+        throw new Error("Errore nella modifica dell'appunto."); 
       }
   
       navigate("/appunti"); 
@@ -144,6 +149,28 @@ function ModificaAppunti() {
                 />
               </Col>
             </Row>
+
+            <Row className="mb-3">
+    <label className="col-sm-4 col-form-label">Utente</label>
+    <Col sm={8}>
+      <input
+        readOnly
+        className="form-control-plaintext"
+        value={formData.utenteId}
+      />
+    </Col>
+  </Row>
+
+  <Row className="mb-3">
+    <label className="col-sm-4 col-form-label">Corso</label>
+    <Col sm={8}>
+      <input
+        readOnly
+        className="form-control-plaintext"
+        value={formData.corsoId}
+      />
+    </Col>
+  </Row>
 
             <Row className="mb-3">
               <label className="col-sm-4 col-form-label">Titolo</label>
