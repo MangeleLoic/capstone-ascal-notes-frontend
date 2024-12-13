@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
 function ModificaAppunti() {
@@ -6,10 +7,10 @@ function ModificaAppunti() {
   const [formData, setFormData] = useState({
     titolo: "",
     contenuto: "",
-    allegato: null,  
+    allegato: null,
   });
   const [error, setError] = useState("");
-  const [allegato, setAllegato] = useState(null);  
+  const [allegato, setAllegato] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +23,7 @@ function ModificaAppunti() {
 
         const response = await fetch(`http://localhost:3001/appunti/${id}`, {
           headers: {
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -34,9 +35,9 @@ function ModificaAppunti() {
         setFormData({
           titolo: data.titolo || "",
           contenuto: data.contenuto || "",
-          allegato: null,  
+          allegato: null,
         });
-        setAllegato(data.allegato); 
+        setAllegato(data.allegato);
       } catch (err) {
         setError(err.message);
       }
@@ -56,7 +57,7 @@ function ModificaAppunti() {
   const handleFileChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
-      allegato: e.target.files[0],  
+      allegato: e.target.files[0],
     }));
   };
 
@@ -70,20 +71,18 @@ function ModificaAppunti() {
 
     try {
       const token = localStorage.getItem("token");
-
-     
       const formDataToSend = new FormData();
       formDataToSend.append("titolo", formData.titolo);
       formDataToSend.append("contenuto", formData.contenuto);
 
       if (formData.allegato) {
-        formDataToSend.append("allegato", formData.allegato);  
+        formDataToSend.append("allegato", formData.allegato);
       }
 
       const response = await fetch(`http://localhost:3001/appunti/${id}`, {
         method: "PUT",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: formDataToSend,
       });
@@ -92,42 +91,46 @@ function ModificaAppunti() {
         throw new Error("Errore nella modifica dell'appunto.");
       }
 
-      navigate("/appunti");  
+      navigate("/appunti");
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="container my-4 ">
-      <div className="row">
-        <div className="col-md-8 mx-auto rounded border p-4">
+    <Container className="my-4">
+      <Row>
+        <Col md={8} className="mx-auto rounded border p-4">
           <h2 className="text-center mb-5">Modifica Appunto</h2>
           {error && <div className="alert alert-danger">{error}</div>}
 
           <form onSubmit={handleSubmit}>
-            <div className="row mb-3">
+            <Row className="mb-3">
               <label className="col-sm-4 col-form-label">ID</label>
-              <div className="col-sm-8">
-                <input readOnly className="form-control-plaintext" value={id} />
-              </div>
-            </div>
+              <Col sm={8}>
+                <input
+                  readOnly
+                  className="form-control-plaintext"
+                  value={id}
+                />
+              </Col>
+            </Row>
 
-            <div className="row mb-3">
+            <Row className="mb-3">
               <label className="col-sm-4 col-form-label">Titolo</label>
-              <div className="col-sm-8">
+              <Col sm={8}>
                 <input
                   className="form-control"
                   name="titolo"
                   value={formData.titolo}
                   onChange={handleChange}
                 />
-              </div>
-            </div>
+              </Col>
+            </Row>
 
-            <div className="row mb-3">
+            <Row className="mb-3">
               <label className="col-sm-4 col-form-label">Contenuto</label>
-              <div className="col-sm-8">
+              <Col sm={8}>
                 <textarea
                   className="form-control"
                   name="contenuto"
@@ -135,12 +138,12 @@ function ModificaAppunti() {
                   value={formData.contenuto}
                   onChange={handleChange}
                 />
-              </div>
-            </div>
+              </Col>
+            </Row>
 
-            <div className="row mb-3">
+            <Row className="mb-3">
               <label className="col-sm-4 col-form-label">Allegato</label>
-              <div className="col-sm-8">
+              <Col sm={8}>
                 <input
                   type="file"
                   className="form-control"
@@ -148,21 +151,25 @@ function ModificaAppunti() {
                 />
                 {allegato && (
                   <div className="mt-2">
-                    <a href={allegato.path} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={allegato.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       Visualizza Allegato Esistente
                     </a>
                   </div>
                 )}
-              </div>
-            </div>
+              </Col>
+            </Row>
 
-            <div className="row">
-              <div className="offset-sm-4 col-sm-4 d-flex">
+            <Row className="align-items-center">
+              <Col sm={4} className="offset-sm-4 d-flex justify-content-center">
                 <button type="submit" className="btn btn-primary">
                   Modifica
                 </button>
-              </div>
-              <div className="col-sm-4 d-flex">
+              </Col>
+              <Col sm={4} className="d-flex justify-content-center">
                 <button
                   type="button"
                   className="btn btn-secondary"
@@ -170,12 +177,12 @@ function ModificaAppunti() {
                 >
                   Annulla
                 </button>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </form>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

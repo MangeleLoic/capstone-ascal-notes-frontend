@@ -6,11 +6,12 @@ function AggiungiAppunto() {
   const [formData, setFormData] = useState({
     titolo: "",
     contenuto: "",
+    utenteId: "",
     corsoId: "",
   });
   const [corsi, setCorsi] = useState([]);
-  const [utente, setUtente] = useState(null);
-  const [error, setError] = useState(null);
+  const [utente, setUtente] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   
 
@@ -44,6 +45,9 @@ function AggiungiAppunto() {
     const fetchUtente = async () => {
       try {
         const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token mancante. Effettua di nuovo l'accesso.");
+        }
         const response = await fetch("http://localhost:3001/utenti/me", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -55,7 +59,10 @@ function AggiungiAppunto() {
         }
 
         const data = await response.json();
-        setUtente(data.id); 
+        setFormData((prevData) => ({
+          ...prevData,
+          utenteId: data.id, 
+        }));
       } catch (error) {
         setError(error.message);
       }
@@ -129,7 +136,7 @@ function AggiungiAppunto() {
               </Form.Label>
               <Col sm={8}>
               <Form.Control
-                  type="textarea"
+                  as="textarea"
                   name="contenuto"
                   rows={3}
                   value={formData.contenuto}
@@ -159,13 +166,13 @@ function AggiungiAppunto() {
               </Col>
             </Row>
 
-            <Row>
-              <Col className="offset-sm-4 sm={4} d-flex">
+            <Row className="align-items-center">
+              <Col sm={4} className="offset-sm-4  d-flex justify-content-center">
                 <button type="submit" className="btn btn-primary">
                   Aggiungi
                 </button>
               </Col>
-              <Col className="sm={4} d-flex">
+              <Col sm={4} className=" d-flex justify-content-center">
                 <a className="btn btn-secondary" href="/appunti" role="button">
                   Annulla
                 </a>

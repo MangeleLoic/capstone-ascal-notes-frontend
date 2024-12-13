@@ -68,7 +68,7 @@ function AggiungiCorso() {
               </Form.Label>
               <Col sm={8}>
                 <Form.Control
-                  type="text"
+                  as="textarea"
                   name="nome"
                   value={formData.nome}
                   onChange={handleChange}
@@ -83,7 +83,7 @@ function AggiungiCorso() {
               </Form.Label>
               <Col sm={8}>
                 <Form.Control
-                  type="text"
+                 as="textarea"
                   name="codice"
                   value={formData.codice}
                   onChange={handleChange}
@@ -128,13 +128,13 @@ function AggiungiCorso() {
               </Col>
            </Row>
 
-            <Row >
-              <Col sm={4} className="offset-sm-4 d-flex">
+            <Row className="align-items-center" >
+              <Col sm={4} className="offset-sm-4 d-flex justify-content-center">
                 <button type="submit" className="btn btn-primary">
                   Aggiungi
                 </button>
               </Col>
-              <Col sm={4} className=" d-flex">
+              <Col sm={4} className=" d-flex justify-content-center">
                 <a className="btn btn-secondary" href="/admin" role="button">
                   Cancella
                 </a>

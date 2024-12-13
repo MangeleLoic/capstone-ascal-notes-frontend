@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
 function ModificaCorso() {
@@ -91,51 +92,51 @@ function ModificaCorso() {
   };
 
   return (
-    <div className="container my-4">
-      <div className="row">
-        <div className="col-md-8 mx-auto rounded border p-4">
+    <Container className=" my-4">
+      <Row>
+        <Col md={8} className=" mx-auto rounded border p-4">
           <h2 className="text-center mb-5">Modifica Corso</h2>
           {error && <div className="alert alert-danger">{error}</div>}
 
           <form onSubmit={handleSubmit}>
             <div className="row mb-3">
               <label className="col-sm-4 col-form-label">ID</label>
-              <div className="col-sm-8">
+              <Col sm={8}>
                 <input
                   readOnly
                   className="form-control-plaintext"
                   value={id}
                 />
-              </div>
+              </Col>
             </div>
 
-            <div className="row mb-3">
+            <Row className=" mb-3">
               <label className="col-sm-4 col-form-label">Nome</label>
-              <div className="col-sm-8">
+              <Col sm={8}>
                 <input
                   className="form-control"
                   name="nome"
                   value={formData.nome}
                   onChange={handleChange}
                 />
-              </div>
-            </div>
+              </Col>
+            </Row>
 
-            <div className="row mb-3">
+            <Row className=" mb-3">
               <label className="col-sm-4 col-form-label">Codice</label>
-              <div className="col-sm-8">
+              <Col sm={8} >
                 <input
                   className="form-control"
                   name="codice"
                   value={formData.codice}
                   onChange={handleChange}
                 />
-              </div>
-            </div>
+              </Col>
+            </Row>
 
-            <div className="row mb-3">
+            <Row className="mb-3">
               <label className="col-sm-4 col-form-label">Descrizione</label>
-              <div className="col-sm-8">
+              <Col sm={8} >
                 <textarea
                   className="form-control"
                   name="descrizione"
@@ -143,12 +144,12 @@ function ModificaCorso() {
                   value={formData.descrizione}
                   onChange={handleChange}
                 />
-              </div>
-            </div>
+              </Col>
+            </Row>
 
-            <div className="row mb-3">
+            <Row className="mb-3">
               <label className="col-sm-4 col-form-label">Facoltà</label>
-              <div className="col-sm-8">
+              <Col sm={8} >
                 <select
                   className="form-select"
                   name="facolta"
@@ -162,16 +163,16 @@ function ModificaCorso() {
                   <option value="Infermieristica">Infermieristica</option>
                   <option value="Altro">Altro</option>
                 </select>
-              </div>
-            </div>
+              </Col>
+            </Row>
 
-            <div className="row">
-              <div className="offset-sm-4 col-sm-4 d-flex">
+            <Row className="align-items-center" >
+            <Col sm={4} className="offset-sm-4  d-flex justify-content-center">
                 <button type="submit" className="btn btn-primary">
                   Modifica
                 </button>
-              </div>
-              <div className="col-sm-4 d-flex">
+              </Col>
+              <Col sm={4} className=" d-flex justify-content-center">
                 <button
                   type="button"
                   className="btn btn-secondary"
@@ -179,12 +180,12 @@ function ModificaCorso() {
                 >
                   Annulla
                 </button>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </form>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
