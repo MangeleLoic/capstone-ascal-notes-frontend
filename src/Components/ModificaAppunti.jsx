@@ -23,9 +23,13 @@ function ModificaAppunti() {
 
         const response = await fetch(`http://localhost:3001/appunti/${id}`, {
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
+
+          
         });
+
 
         if (!response.ok) {
           throw new Error("Errore nel recupero dei dati dell'appunto.");
@@ -46,6 +50,7 @@ function ModificaAppunti() {
     fetchAppunto();
   }, [id]);
 
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -63,39 +68,63 @@ function ModificaAppunti() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setError("");
+  
     if (!formData.titolo || !formData.contenuto) {
       setError("Tutti i campi sono obbligatori.");
       return;
     }
-
+  
     try {
       const token = localStorage.getItem("token");
-      const formDataToSend = new FormData();
-      formDataToSend.append("titolo", formData.titolo);
-      formDataToSend.append("contenuto", formData.contenuto);
-
-      if (formData.allegato) {
-        formDataToSend.append("allegato", formData.allegato);
+      if (!token) {
+        throw new Error("Token di autenticazione non trovato.");
       }
-
-      const response = await fetch(`http://localhost:3001/appunti/${id}`, {
-        method: "PUT",
+  
+      
+      const formDataToSend = new FormData();
+      formDataToSend.append("file", formData.allegato);
+      formDataToSend.append("appuntoId", id);
+  
+      const uploadResponse = await fetch("http://localhost:3001/allegati/upload", {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
         body: formDataToSend,
       });
-
-      if (!response.ok) {
-        throw new Error("Errore nella modifica dell'appunto.");
+  
+      if (!uploadResponse.ok) {
+        throw new Error("Errore durante il caricamento dell'allegato.");
       }
-
-      navigate("/appunti");
+  
+      const uploadedFileData = await uploadResponse.json(); 
+      
+      const appuntoUpdateData = {
+        titolo: formData.titolo,
+        contenuto: formData.contenuto, 
+  allegati: uploadedFileData ? [uploadedFileData.id] : allegato ? [allegato.id] : [],
+      };
+  
+      const response = await fetch(`http://localhost:3001/appunti/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(appuntoUpdateData),
+      });
+  
+      if (!response.ok) {
+        navigate("/appunti");
+      }
+  
+      navigate("/appunti"); 
     } catch (err) {
       setError(err.message);
     }
   };
+  
 
   return (
     <Container className="my-4">
