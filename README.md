@@ -1,4 +1,4 @@
-# Appunti Universitari
+# Ascal Notes
 
 Un'applicazione fullstack progettata per consentire agli utenti di consultare e salvare appunti universitari in modo semplice e organizzato.
 
