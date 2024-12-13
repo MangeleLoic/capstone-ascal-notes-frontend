@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -90,10 +91,10 @@ function GestisciAppunti() {
     <>
      <div className="appunti-container py-2">
    
-    <div className="container my-4">
+    <Container className=" my-4">
      
-      <div className="row mb-3">
-        <div className="col">
+      <Row className=" mb-3">
+        <Col>
           <Link
             className="btn btn-primary me-1"
             to="/appunti/aggiungi"
@@ -108,9 +109,9 @@ function GestisciAppunti() {
           >
             Refresh
           </button>
-        </div>
-        <div className="col"></div>
-      </div>
+        </Col>
+        <Col></Col>
+      </Row>
       {loading && <p>Caricamento in corso...</p>}
       {error && <p className="text-danger">{error}</p>}
       {!loading && !error && (
@@ -200,7 +201,7 @@ function GestisciAppunti() {
           </div>
         </>
       )}
-    </div>
+    </Container>
     </div>
     </>
   );

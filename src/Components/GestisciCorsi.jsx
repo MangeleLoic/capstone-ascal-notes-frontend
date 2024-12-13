@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function GestisciCorsi() {
@@ -80,18 +81,18 @@ function GestisciCorsi() {
   return (
   <>  
    <div className="appunti-container py-2">
-    <div className="container my-4">
-      <div className="row mb-3">
-        <div className="col">
+    <Container className=" my-4">
+      <Row className=" mb-3">
+        <Col>
           <Link className="btn btn-primary me-1" to="/admin/corso/aggiungi" role="button">
             Aggiungi un Corso
           </Link>
           <button type="button" className="btn btn-outline-primary" onClick={() => window.location.reload()}>
             Refresh
           </button>
-        </div>
-        <div className="col"></div>
-      </div>
+        </Col>
+        <Col></Col>
+      </Row>
       {loading && <p>Caricamento in corso...</p>}
       {error && <p className="text-danger">{error}</p>}
       {!loading && !error && (
@@ -153,7 +154,7 @@ function GestisciCorsi() {
           </div>
         </>
       )}
-    </div>
+    </Container>
     </div>
     </>
   );
