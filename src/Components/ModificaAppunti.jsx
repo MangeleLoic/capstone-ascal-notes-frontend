@@ -7,6 +7,8 @@ function ModificaAppunti() {
   const [formData, setFormData] = useState({
     titolo: "",
     contenuto: "",
+    utenteId: "",  
+    corsoId: "",  
     allegato: null,
   });
   const [error, setError] = useState("");
@@ -41,7 +43,7 @@ function ModificaAppunti() {
           titolo: data.titolo || "",
           contenuto: data.contenuto || "",
           utenteId: data.utente.id || "",  
-        corsoId: data.corso.nome || "",   
+        corsoId: data.corso.id || "",   
           allegato: null,
         });
         setAllegato(data.allegato);
@@ -106,8 +108,8 @@ function ModificaAppunti() {
       const appuntoUpdateData = {
         titolo: formData.titolo,
         contenuto: formData.contenuto,
-        utenteId: formData.utente,  
-      corsoId: formData.corso,   
+        utenteId: formData.utenteId,  
+      corsoId: formData.corsoId,   
   allegati: uploadedFileData ? [uploadedFileData.id] : allegato ? [allegato.id] : [],
       };
   
