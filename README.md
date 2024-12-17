@@ -30,6 +30,7 @@ https://github.com/MangeleLoic/Capstone-AscalNotes-BackEnd.git
 
 ---
 Realizzato da Loic Mangele
+---
 GitHub: https://github.com/MangeleLoic
 
    
