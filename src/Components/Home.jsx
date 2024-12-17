@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [allegati, setAllegati] = useState([]);
+  const navigate = useNavigate(); 
 
   const handleSearch = async (e) => {
     e.preventDefault(); 
@@ -26,7 +28,7 @@ function Home() {
       });
 
       if (!response.ok) {
-        throw new Error("Nessun risultato trovato o errore nel server.");
+        navigate("/NotFound");
       }
 
       const data = await response.json();
@@ -85,7 +87,7 @@ function Home() {
           {error && <p className="text-danger mt-3">{error}</p>}
           {result && (
             <Card className='my-4 mx-auto text-center bg-success text-light ' style={{ width: '20rem' }}>
-              <Card.Img variant="top" src="../src/Img/due libri impilati + un libro aperto+ una sola scritta Ascal-Notes+ sfondo rosso_giallo+ una piuma doca.png" />
+              <Card.Img variant="top" src="https://png.pngtree.com/background/20230614/original/pngtree-an-open-book-sits-on-top-of-several-books-picture-image_3462697.jpg" />
               <Card.Body>
                 <Card.Title>Risultato ricerca</Card.Title>
                 <Card.Text>
