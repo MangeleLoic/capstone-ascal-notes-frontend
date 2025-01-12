@@ -15,6 +15,7 @@ import ModificaCorso from './Components/ModificaCorsi';
 import GestisciAppunti from './Components/GestisciAppunti';
 import ModificaAppunti from './Components/ModificaAppunti';
 import AggiungiAppunti from './Components/AggiungiAppunti';
+import SingleAppunto from './Components/SingleAppunto';
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
         <Route path="/appunti" element={<GestisciAppunti />} />
         <Route path="/appunti/modifica/:id" element={<ModificaAppunti />} />
         <Route path="/appunti/aggiungi" element={<AggiungiAppunti />} />
+        <Route path="/appunti/:noteId" element={<SingleAppunto />} />
+
         <Route path='*' element={<NotFound />} />
         <Route
           path="/profilo"

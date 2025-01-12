@@ -1,26 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Carousel from 'react-bootstrap/Carousel';
 
 function Home() {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [allegati, setAllegati] = useState([]);
-  const navigate = useNavigate(); 
+  const [latestNotes, setLatestNotes] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchLatestNotes = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) throw new Error("Token non trovato");
+  
+        let page = 0; 
+        let allNotes = [];
+  
+        
+        while (true) {
+          const response = await fetch(`http://localhost:3001/appunti?page=${page}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+  
+          if (!response.ok) {
+            throw new Error(`Errore nella risposta dell'API: ${response.status}`);
+          }
+  
+          const data = await response.json();
+          const notes = data.content || [];
+  
+          if (notes.length === 0) break; 
+  
+          allNotes = [...allNotes, ...notes]; 
+          page++; 
+        }
+  
+       
+        const sortedNotes = allNotes
+          .sort((a, b) => new Date(b.dataCreazione) - new Date(a.dataCreazione))
+          .slice(0, 5);
+  
+        setLatestNotes(sortedNotes);
+      } catch (err) {
+        console.error("Errore nel caricamento degli ultimi appunti:", err.message);
+      }
+    };
+  
+    fetchLatestNotes();
+  }, []);
+  
+  
+  
 
   const handleSearch = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (!search.trim()) {
       setError("Il campo di ricerca non può essere vuoto.");
       return;
     }
 
-    setError(null); 
+    setError(null);
 
     try {
-      const token = localStorage.getItem('token'); 
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error("Token non trovato");
+        return;
+      }
+
       const response = await fetch(`http://localhost:3001/appunti/titolo/${search}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -34,9 +88,8 @@ function Home() {
       const data = await response.json();
       setResult(data);
 
-      
       if (data.id) {
-        const allegatiResponse =await fetch(`http://localhost:3001/allegati/${data.id}/all`, {
+        const allegatiResponse = await fetch(`http://localhost:3001/allegati/${data.id}/all`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -52,7 +105,7 @@ function Home() {
         setAllegati([]);
       }
     } catch (err) {
-      setResult(null); 
+      setResult(null);
       setAllegati([]);
       setError(err.message);
     }
@@ -86,7 +139,7 @@ function Home() {
           </Form>
           {error && <p className="text-danger mt-3">{error}</p>}
           {result && (
-            <Card className='my-4 mx-auto text-center bg-success text-light ' style={{ width: '20rem' }}>
+            <Card className="my-4 mx-auto text-center bg-success text-light" style={{ width: '20rem' }}>
               <Card.Img variant="top" src="https://png.pngtree.com/background/20230614/original/pngtree-an-open-book-sits-on-top-of-several-books-picture-image_3462697.jpg" />
               <Card.Body>
                 <Card.Title>Risultato ricerca</Card.Title>
@@ -94,15 +147,15 @@ function Home() {
                   <p><strong>Titolo:</strong> {result.titolo}</p>
                   <p><strong>Contenuto:</strong> {result.contenuto}</p>
                   <p><strong>Caricato da:</strong> {result.utente.fullname}</p>
-                  <p><strong>Creato il :</strong>  {new Date(result.dataCreazione).toLocaleDateString('it-IT', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-          })}</p>
+                  <p><strong>Creato il :</strong> {new Date(result.dataCreazione).toLocaleDateString('it-IT', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}</p>
                 </Card.Text>
-               
+
                 {allegati.length > 0 && (
                   allegati.map((allegato) => (
                     <Button
@@ -120,6 +173,48 @@ function Home() {
           )}
         </Col>
       </Row>
+      {!result && (
+        <Row className="w-100 mt-4">
+          <Col>
+          <Carousel>
+  {latestNotes.map((note) => (
+    <Carousel.Item key={note.id}>
+       
+        <h5 className='text-center'>Appunti Recenti..</h5>
+        
+      <div className="d-flex justify-content-center">
+       
+        <Card className="text-center bg-secondary text-light" style={{ width: '18rem',  height: '20rem'}}>
+          <Card.Body>
+            <Card.Title>{note.titolo}</Card.Title>
+            <Card.Text>
+              <p><strong>Contenuto:</strong> {note.contenuto?.slice(0, 50)}...</p>
+              <p><strong>Caricato da:</strong> {note.utente?.fullname || "Sconosciuto"}</p>
+              <p>
+                <strong>Creato il:</strong>{" "}
+                {new Date(note.dataCreazione).toLocaleDateString('it-IT', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </p>
+            </Card.Text>
+            <Button variant="primary" href={`/appunti/${note.id}`}>
+              Vai all'appunto
+            </Button>
+          </Card.Body>
+        </Card>
+      </div>
+     
+    </Carousel.Item>
+  ))}
+</Carousel>
+
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 }
